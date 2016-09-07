@@ -21,6 +21,9 @@ class GetSettings(object):
         else:
             pass
         return link
+    def get_end_of_link(self,link_id="empty"):
+        link = conf.get("links",link_id)
+        return link
 
     def get_server(self):
         return conf.get("connection","srv")
