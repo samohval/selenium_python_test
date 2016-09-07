@@ -10,7 +10,7 @@ __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 import unittest
 from selenium import webdriver
 import config
-
+import datetime
 
 Init_links = config.GetSettings()
 Init_connection = config.GetSettings().get_all_parameters()
@@ -20,10 +20,16 @@ srv = Init_connection.get('server')
 user = Init_connection.get('user')
 pswd = Init_connection.get('password')
 
+#vars
+today = str(datetime.datetime.now())
+name_of_card_type = 'test_card_type_at '+today
 
 #links
 cards           = Init_links.get_link("cards")
 card_types      = Init_links.get_link("card_types")
+card_type_7     = card_types + Init_links.get_end_of_link("card_type")
+card_type_edit  = card_types + Init_links.get_end_of_link("card_type_edit")
+
 
 class Test_Loyality_cards(unittest.TestCase):
 
@@ -46,6 +52,8 @@ class Test_Loyality_cards(unittest.TestCase):
 
 
 #check detailed infocard
+
+    # @unittest.skip('not supported')
     def test_detailed_info_card(self):
         self.Authorize()
         self.browser.get(cards)
@@ -54,12 +62,43 @@ class Test_Loyality_cards(unittest.TestCase):
         SearchElement = self.browser.find_element_by_id('kind')
         self.assertIsNotNone(SearchElement)
         self.browser.close()
-        
+
+    # @unittest.skip('not supported')
     def test_link_card_types(self):
         self.Authorize()
         self.browser.get(card_types)
         SearchElement = self.browser.find_element_by_link_text('VIP')
         self.assertIsNotNone(SearchElement)
+        self.browser.close()
+
+    # @unittest.skip('test skipped')
+    def test_detailed_card_type(self):
+        self.Authorize()
+        self.browser.get(card_type_7)
+        SearchElement = self.browser.find_element_by_id('max_day_bonus')
+        self.assertIsNotNone(SearchElement)
+        self.assertEqual(SearchElement.get_attribute('value'),'60.000')
+        self.browser.close()
+
+    # @unittest.skip('not supported')
+    def test_add_new_card_type(self):
+        self.Authorize()
+        self.browser.get(card_type_edit)
+        elem = self.browser.find_element_by_id('name')
+        elem.clear()
+        elem.send_keys(name_of_card_type)
+        elem = self.browser.find_element_by_id('max_day_bonus')
+        elem.clear()
+        elem.send_keys('60.000')
+        elem = self.browser.find_element_by_id('save')
+        elem.click()
+        elem = self.browser.find_element_by_xpath('/html/body/div[2]/table/thead/tr/th[1]')
+        #
+        elem.click()
+        elem.click()
+        # 
+        elem = self.browser.find_element_by_link_text(name_of_card_type)
+        self.assertIsNotNone(elem)
         self.browser.close()
 
 
@@ -68,4 +107,4 @@ class Test_Loyality_cards(unittest.TestCase):
         self.browser.quit()
 
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    unittest.main(verbosity=5)
