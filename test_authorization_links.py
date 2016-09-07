@@ -6,7 +6,7 @@ __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
 import unittest
-import logging
+# import logging
 from selenium import webdriver
 import config # parameters module
 
@@ -15,8 +15,8 @@ import config # parameters module
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support import expected_conditions as EC
 
-logging.basicConfig(filename='unittest_log',level=logging.DEBUG)
-logging.debug('This is log message')
+# logging.basicConfig(filename='unittest_log',level=logging.DEBUG)
+# logging.debug('This is log message')
 
 Init_connection = config.GetSettings().get_all_parameters()
 Init_links = config.GetSettings()
@@ -34,7 +34,7 @@ members         = Init_links.get_link("members")
 bonus_model     = Init_links.get_link("bonus_model")
 trade_point     = Init_links.get_link("trade_point")
 edit            = Init_links.get_link("edit")
-card_types      = Init_links.get_link("card_types")
+
 
 
 
