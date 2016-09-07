@@ -58,6 +58,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
 
 
 #check log|pass
+    @unittest.skip('not supported')
     def test_Authorization(self):
         self.Authorize()
         today = self.browser.find_element_by_id("for-today")
