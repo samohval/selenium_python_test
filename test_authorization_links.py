@@ -1,37 +1,40 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# author: maxim.samohval@protonmail.com
 # date: 05/09/2016
 
+__version__ = "0.1"
+__author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
 import unittest
 import logging
-import ConfigParser
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
+import config # parameters module
+
+#from selenium.webdriver.support.ui import Select
 # from selenium.webdriver.support.ui import WebDriverWait
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support import expected_conditions as EC
 
-_CONF_FILE = "/home/samohval/Dropbox/loyality_unit/UnitTest/test.cfg"
-conf = ConfigParser.RawConfigParser()
-conf.read(_CONF_FILE)
 logging.basicConfig(filename='unittest_log',level=logging.DEBUG)
 logging.debug('This is log message')
 
+Init_connection = config.GetSettings().get_all_parameters()
+Init_links = config.GetSettings()
+
+
 #authorization
-srv = conf.get("connection","srv")
-user = conf.get("connection","user")
-pswd = conf.get("connection","pass")
+srv = Init_connection.get('server')
+user = Init_connection.get('user')
+pswd = Init_connection.get('password')
 
 
 #links
-cards           = srv + conf.get("links","cards")
-members         = srv + conf.get("links","members")
-bonus_model     = srv + conf.get("links","bonus_model")
-trade_point     = srv + conf.get("links","trade_point")
-edit            = srv + conf.get("links","edit")
-card_types      = srv + conf.get("links","card_types")
+cards           = Init_links.get_link("cards")
+members         = Init_links.get_link("members")
+bonus_model     = Init_links.get_link("bonus_model")
+trade_point     = Init_links.get_link("trade_point")
+edit            = Init_links.get_link("edit")
+card_types      = Init_links.get_link("card_types")
 
 
 
@@ -67,7 +70,8 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 #check link cards
-    def test_link_Cards(self):
+
+    def test_link_Cards_positive(self):
         self.Authorize()
         self.browser.get(cards)
         SearchElement = self.browser.find_element_by_id('download')
@@ -75,7 +79,8 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 #check link members
-    def test_link_members(self):
+    # @unittest.skip('not supported')
+    def test_link_members_positive(self):
         self.Authorize()
         self.browser.get(members)
         SearchElement = self.browser.find_element_by_id('block-member')
@@ -83,7 +88,8 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 #check link bonus_model
-    def test_link_bonus_model(self):
+    # @unittest.skip('not supported')
+    def test_link_bonus_model_positive(self):
         self.Authorize()
         self.browser.get(bonus_model)
         SearchElement = self.browser.find_element_by_id('filter-status')
@@ -91,7 +97,8 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 #check link trade_point
-    def test_link_trade_point(self):
+    # @unittest.skip('not supported')
+    def test_link_trade_point_positive(self):
         self.Authorize()
         self.browser.get(trade_point)
         SearchElement = self.browser.find_element_by_class_name('text-info')
@@ -99,20 +106,11 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 #check link edit
-    def test_link_edit(self):
+    # @unittest.skip('not supported')
+    def test_link_edit_positive(self):
         self.Authorize()
         self.browser.get(edit)
         SearchElement = self.browser.find_element_by_id('bonus_auto')
-        self.assertIsNotNone(SearchElement)
-        self.browser.close()
-
-#check detailed infocard
-    def test_detailed_info_card(self):
-        self.Authorize()
-        self.browser.get(cards)
-        card_link = self.browser.find_element_by_xpath('/html/body/div[2]/table/tbody/tr[3]/td[2]/a').get_attribute('href')
-        self.browser.get(card_link)
-        SearchElement = self.browser.find_element_by_id('kind')
         self.assertIsNotNone(SearchElement)
         self.browser.close()
 
