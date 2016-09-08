@@ -8,10 +8,13 @@
 import unittest
 import test_authorization_links
 import test_check_module_cards
+import test_members
 
 loader = unittest.TestLoader()
 suite = loader.loadTestsFromModule(test_authorization_links)
 suite.addTest(loader.loadTestsFromModule(test_check_module_cards))
+suite.addTest(loader.loadTestsFromModule(test_members))
+
 
 runner = unittest.TextTestRunner(verbosity=2)
 result = runner.run(suite)
