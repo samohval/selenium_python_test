@@ -57,7 +57,7 @@ class Test_Loyality_cards(unittest.TestCase):
     def test_detailed_info_card(self):
         self.Authorize()
         self.browser.get(cards)
-        card_link = self.browser.find_element_by_xpath('/html/body/div[2]/table/tbody/tr[3]/td[2]/a').get_attribute('href')
+        card_link = self.browser.find_element_by_xpath('//tr[1]/td[2]/a').get_attribute('href')
         self.browser.get(card_link)
         SearchElement = self.browser.find_element_by_id('kind')
         self.assertIsNotNone(SearchElement)
@@ -92,11 +92,11 @@ class Test_Loyality_cards(unittest.TestCase):
         elem.send_keys('60.000')
         elem = self.browser.find_element_by_id('save')
         elem.click()
-        elem = self.browser.find_element_by_xpath('/html/body/div[2]/table/thead/tr/th[1]')
+        elem = self.browser.find_element_by_xpath('//th[1]')
         #
         elem.click()
         elem.click()
-        # 
+        #
         elem = self.browser.find_element_by_link_text(name_of_card_type)
         self.assertIsNotNone(elem)
         self.browser.close()
