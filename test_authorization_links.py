@@ -5,10 +5,10 @@
 __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
-import unittest
+import unittest,config
 # import logging
 from selenium import webdriver
-import config # parameters module
+
 
 #from selenium.webdriver.support.ui import Select
 # from selenium.webdriver.support.ui import WebDriverWait
