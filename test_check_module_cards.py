@@ -54,7 +54,7 @@ class Test_Loyality_cards(unittest.TestCase):
 #check detailed infocard
 
     # @unittest.skip('not supported')
-    def test_detailed_info_card(self):
+    def test_detailed_info_card_positive(self):
         self.Authorize()
         self.browser.get(cards)
         card_link = self.browser.find_element_by_xpath('//tr[1]/td[2]/a').get_attribute('href')
@@ -64,7 +64,7 @@ class Test_Loyality_cards(unittest.TestCase):
         self.browser.close()
 
     # @unittest.skip('not supported')
-    def test_link_card_types(self):
+    def test_link_card_types_positive(self):
         self.Authorize()
         self.browser.get(card_types)
         SearchElement = self.browser.find_element_by_link_text('VIP')
@@ -72,7 +72,7 @@ class Test_Loyality_cards(unittest.TestCase):
         self.browser.close()
 
     # @unittest.skip('test skipped')
-    def test_detailed_card_type(self):
+    def test_detailed_card_type_positive(self):
         self.Authorize()
         self.browser.get(card_type_7)
         SearchElement = self.browser.find_element_by_id('max_day_bonus')
@@ -81,7 +81,7 @@ class Test_Loyality_cards(unittest.TestCase):
         self.browser.close()
 
     # @unittest.skip('not supported')
-    def test_add_new_card_type(self):
+    def test_add_new_card_type_positive(self):
         self.Authorize()
         self.browser.get(card_type_edit)
         elem = self.browser.find_element_by_id('name')
