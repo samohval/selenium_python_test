@@ -92,6 +92,7 @@ class Test_Loyality_cards(unittest.TestCase):
         elem.send_keys('60.000')
         elem = self.browser.find_element_by_id('save')
         elem.click()
+        #первая колонка в таблице
         elem = self.browser.find_element_by_xpath('//th[1]')
         #
         elem.click()
