@@ -7,10 +7,9 @@ __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
 
-import unittest
+import unittest,config,datetime
 from selenium import webdriver
-import config
-import datetime
+
 
 Init_links = config.GetSettings()
 Init_connection = config.GetSettings().get_all_parameters()
