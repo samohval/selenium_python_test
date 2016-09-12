@@ -2,3 +2,5 @@
 *.pyc
 /unittest_log
 *.png
+/test_directory.py
+/testing_def.py
