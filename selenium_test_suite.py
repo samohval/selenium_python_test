@@ -3,10 +3,10 @@
 # author: maxim.samohval@protonmail.com
 # date: 05/09/2016
 # Testing server of Loyality
-#add comment
+
 
 import unittest
-import test_authorization_links, test_check_module_cards,test_members,test_bonus_model,test_directory
+import test_authorization_links, test_check_module_cards,test_members,test_bonus_model,test_directory, test_settings
 
 
 loader = unittest.TestLoader()
@@ -15,6 +15,7 @@ suite.addTest(loader.loadTestsFromModule(test_check_module_cards))
 suite.addTest(loader.loadTestsFromModule(test_members))
 suite.addTest(loader.loadTestsFromModule(test_bonus_model))
 suite.addTest(loader.loadTestsFromModule(test_directory))
+suite.addTest(loader.loadTestsFromModule(test_settings))
 
 runner = unittest.TextTestRunner(verbosity=2)
 result = runner.run(suite)
