@@ -94,13 +94,13 @@ class Test_Loyality_bonus_models(unittest.TestCase):
         wait = WebDriverWait(driver, 15)
         element = wait.until(EC.invisibility_of_element_located((By.ID,'loading')))
         driver.save_screenshot('firefox_after.click.png')
-        print driver.current_url
         self.assertTrue("/edit/id/" in driver.current_url)
         print driver.current_url
         driver.close()
 
-    # @unittest.skip('not supported')
+    @unittest.skip('not supported')
     # проверить что изменённая модель отображается в списке моделей
+    # тест не окончен!
     def test_modified_model_visible_in_list_positive(self):
         self.Authorize()
         driver = self.browser
