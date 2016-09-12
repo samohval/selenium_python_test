@@ -9,12 +9,6 @@ import unittest,config
 # import logging
 from selenium import webdriver
 
-
-#from selenium.webdriver.support.ui import Select
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support import expected_conditions as EC
-
 # logging.basicConfig(filename='unittest_log',level=logging.DEBUG)
 # logging.debug('This is log message')
 
