@@ -6,11 +6,7 @@
 #add comment
 
 import unittest
-import test_authorization_links
-import test_check_module_cards
-import test_members
-import test_bonus_model
-
+import test_authorization_links, test_check_module_cards,test_members,test_bonus_model,test_directory
 
 
 loader = unittest.TestLoader()
@@ -18,6 +14,7 @@ suite = loader.loadTestsFromModule(test_authorization_links)
 suite.addTest(loader.loadTestsFromModule(test_check_module_cards))
 suite.addTest(loader.loadTestsFromModule(test_members))
 suite.addTest(loader.loadTestsFromModule(test_bonus_model))
+suite.addTest(loader.loadTestsFromModule(test_directory))
 
 runner = unittest.TextTestRunner(verbosity=2)
 result = runner.run(suite)
