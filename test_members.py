@@ -46,13 +46,14 @@ class Test_loyality_members(unittest.TestCase):
 
     # @unittest.skip('skipped')
     def test_detailed_info_member_positive(self):
+        driver = self.browser
         self.Authorize()
         self.browser.get(members)
-        member_link = self.browser.find_element_by_xpath('//tr[1]/td[2]/a').get_attribute('href')
-        self.browser.get(member_link)
-        SearchElement = self.browser.find_element_by_id('cards')
+        member_link = driver.find_element_by_xpath('//tr[1]/td[2]/a').get_attribute('href')
+        driver.get(member_link)
+        SearchElement = driver.find_element_by_id('cards')
         self.assertIsNotNone(SearchElement)
-        self.browser.close()
+        driver.close()
 
     # @unittest.skip('skipped')
     def test_detailed_info_members_group_positive(self):
