@@ -6,9 +6,9 @@
 __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
-import unittest
+import unittest, config
 from selenium import webdriver
-import config
+
 
 #Init_block
 Init_links = config.GetSettings()
@@ -44,7 +44,7 @@ class Test_loyality_members(unittest.TestCase):
         self.LoginPass()
 
 
-    #@unittest.skip('skipped')
+    # @unittest.skip('skipped')
     def test_detailed_info_member_positive(self):
         self.Authorize()
         self.browser.get(members)
@@ -54,7 +54,7 @@ class Test_loyality_members(unittest.TestCase):
         self.assertIsNotNone(SearchElement)
         self.browser.close()
 
-    #@unittest.skip('skipped')
+    # @unittest.skip('skipped')
     def test_detailed_info_members_group_positive(self):
         self.Authorize()
         self.browser.get(members_group)
@@ -72,6 +72,9 @@ class Test_loyality_members(unittest.TestCase):
         self.assertIsNotNone(SearchElement)
         self.browser.close()
 
+    def tearDown(self):
+        self.browser.close()
+        self.browser.quit()
 
 if __name__ == '__main__':
     unittest.main(verbosity=5)
