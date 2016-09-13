@@ -6,53 +6,27 @@ __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
 import unittest,config
-# import logging
 from selenium import webdriver
-
-# logging.basicConfig(filename='unittest_log',level=logging.DEBUG)
-# logging.debug('This is log message')
-
-Init_connection = config.GetSettings().get_all_parameters()
-Init_links = config.GetSettings()
-
-
-#authorization
-srv = Init_connection.get('server')
-user = Init_connection.get('user')
-pswd = Init_connection.get('password')
-
-
-#links
-cards           = Init_links.get_link("cards")
-members         = Init_links.get_link("members")
-bonus_model     = Init_links.get_link("bonus_model")
-trade_point     = Init_links.get_link("trade_point")
-edit            = Init_links.get_link("edit")
-
-
-
+from selenium.webdriver.support.ui import WebDriverWait
 
 # testSuite
 class Test_Loyalty_Authorization_Links(unittest.TestCase):
 
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser        = webdriver.Firefox()
+        self.myBrowser      = config.MyBrowser()
+        self.settings       = config.GetSettings()
+        self.cards          = self.settings.get_link("cards")
+        self.members        = self.settings.get_link("members")
+        self.bonus_model    = self.settings.get_link("bonus_model")
+        self.trade_point    = self.settings.get_link("trade_point")
+        self.edit           = self.settings.get_link("edit")
         self.browser.maximize_window()
 
+
     def Authorize(self):
-        self.browser.get(srv)
-        self.LoginPass()
-
-    def LoginPass(self):
-        username = self.browser.find_element_by_name("username")
-        username.clear()
-        username.send_keys(user)
-        password = self.browser.find_element_by_name("password")
-        password.clear()
-        password.send_keys(pswd)
-        password.submit()
-
+        self.myBrowser.connect_auth_server(self.browser)
 
 #check log|pass
     @unittest.skip('not supported')
@@ -64,10 +38,10 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 #check link cards
-
+    # @unittest.skip('not supported')
     def test_link_Cards_positive(self):
         self.Authorize()
-        self.browser.get(cards)
+        self.browser.get(self.cards)
         SearchElement = self.browser.find_element_by_id('download')
         self.assertIsNotNone(SearchElement)
         self.browser.close()
@@ -76,7 +50,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
     # @unittest.skip('not supported')
     def test_link_members_positive(self):
         self.Authorize()
-        self.browser.get(members)
+        self.browser.get(self.members)
         SearchElement = self.browser.find_element_by_id('block-member')
         self.assertIsNotNone(SearchElement)
         self.browser.close()
@@ -85,7 +59,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
     # @unittest.skip('not supported')
     def test_link_bonus_model_positive(self):
         self.Authorize()
-        self.browser.get(bonus_model)
+        self.browser.get(self.bonus_model)
         SearchElement = self.browser.find_element_by_id('filter-status')
         self.assertIsNotNone(SearchElement)
         self.browser.close()
@@ -94,7 +68,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
     # @unittest.skip('not supported')
     def test_link_trade_point_positive(self):
         self.Authorize()
-        self.browser.get(trade_point)
+        self.browser.get(self.trade_point)
         SearchElement = self.browser.find_element_by_class_name('text-info')
         self.assertIsNotNone(SearchElement)
         self.browser.close()
@@ -103,9 +77,11 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
     # @unittest.skip('not supported')
     def test_link_edit_positive(self):
         self.Authorize()
-        self.browser.get(edit)
-        SearchElement = self.browser.find_element_by_id('bonus_auto')
-        self.assertIsNotNone(SearchElement)
+        driver = self.browser
+        driver.get(self.edit)
+        wait = WebDriverWait(driver,5)
+        page_loaded = wait.until(lambda driver: driver.find_element_by_id('bonus_auto'))
+        self.assertIsNotNone(page_loaded)
         self.browser.close()
 
 
@@ -113,10 +89,6 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
 
         self.browser.close()
         self.browser.quit()
-
-
-
-
 
 
 if __name__ == '__main__':
