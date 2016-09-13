@@ -12,52 +12,31 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
-Init_links = config.GetSettings()
-Init_connection = config.GetSettings().get_all_parameters()
-
 #vars
 TEST_MODEL_NAME = 'TEST_MODEL '+str(datetime.datetime.now())
 now_date = datetime.date.today()
 cur_day = now_date.day
 
-
-#authorization
-srv = Init_connection.get('server')
-user = Init_connection.get('user')
-pswd = Init_connection.get('password')
-
-#links
-bonus_model = Init_links.get_link("bonus_model")
-coupons     = Init_links.get_link("coupons")
-model_add = bonus_model + Init_links.get_end_of_link("model_add")
-
 class Test_Loyality_bonus_models(unittest.TestCase):
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser        = webdriver.Firefox()
+        self.myBrowser      = config.MyBrowser()
+        self.settings       = config.GetSettings()
+        self.bonus_model    = self.settings.get_link("bonus_model")
+        self.coupons        = self.settings.get_link("coupons")
+        self.model_add      = self.bonus_model + self.settings.get_end_of_link("model_add")
         self.browser.maximize_window()
-        self.browser.implicitly_wait(30)
-        self.verificationErrors = []
-
-    def LoginPass(self):
-        username = self.browser.find_element_by_name("username")
-        username.clear()
-        username.send_keys(user)
-        password = self.browser.find_element_by_name("password")
-        password.clear()
-        password.send_keys(pswd)
-        password.submit()
+        self.browser.implicitly_wait(20)
 
     def Authorize(self):
-        self.browser.get(srv)
-        self.LoginPass()
+        self.myBrowser.connect_auth_server(self.browser)
 
     # @unittest.skip('not supported')
     def test_coupons_positive(self):
         self.Authorize()
         driver = self.browser
-        driver.get(coupons)
+        driver.get(self.coupons)
         SearchElement = driver.find_element_by_id('lists')
         self.assertIsNotNone(SearchElement)
         driver.close()
@@ -66,7 +45,7 @@ class Test_Loyality_bonus_models(unittest.TestCase):
     def test_open_model_positive(self):
         self.Authorize()
         driver = self.browser
-        driver.get(bonus_model)
+        driver.get(self.bonus_model)
         model_link = driver.find_element_by_xpath('//tr[1]/td[1]/a').get_attribute('href')
         driver.get(model_link)
         Element = driver.find_element_by_id('remove_restriction')
@@ -78,7 +57,8 @@ class Test_Loyality_bonus_models(unittest.TestCase):
     def test_add_save_new_model_positive(self):
         self.Authorize()
         driver = self.browser
-        driver.get(model_add)
+        wait = WebDriverWait(driver, 15)
+        driver.get(self.model_add)
         driver.find_element_by_id('model_name').clear()
         driver.find_element_by_id('model_name').send_keys(TEST_MODEL_NAME)
         driver.find_element_by_id("first_start_day").click()
@@ -89,27 +69,13 @@ class Test_Loyality_bonus_models(unittest.TestCase):
         driver.find_element_by_name("add-products-id").click()
         driver.find_element_by_xpath("(//input[@name='add-products-id'])[2]").click()
         driver.find_element_by_css_selector("#products-load-buttons > button.btn.btn-primary").click()
-        driver.find_element_by_id('save').click()
-        driver.save_screenshot('firefox_before_click.png')
-        wait = WebDriverWait(driver, 15)
-        element = wait.until(EC.invisibility_of_element_located((By.ID,'loading')))
-        driver.save_screenshot('firefox_after.click.png')
+        driver.find_element_by_id("save").click()
+        wait.until(EC.invisibility_of_element_located((By.ID,'loading')))
         self.assertTrue("/edit/id/" in driver.current_url)
-        print driver.current_url
         driver.close()
 
-    @unittest.skip('not supported')
-    # проверить что изменённая модель отображается в списке моделей
-    # тест не окончен!
-    def test_modified_model_visible_in_list_positive(self):
-        self.Authorize()
-        driver = self.browser
-        driver.get(bonus_model)
-        self.assertTrue("/edit/id/" in driver.current_url)
-        driver.close()
 
     def tearDown(self):
-        self.assertEqual([],self.verificationErrors)
         self.browser.close()
         self.browser.quit()
 
