@@ -5,18 +5,20 @@
 __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
-import unittest, config
+import unittest
+
+import config
 from selenium import webdriver
 
 Init_links = config.GetSettings()
 Init_connection = config.GetSettings().get_all_parameters()
 
-#authorization
+# authorization
 srv = Init_connection.get('server')
 user = Init_connection.get('user')
 pswd = Init_connection.get('password')
 
-#links
+# links
 users = Init_links.get_link("users")
 settings = Init_links.get_link("settings")
 lbonuses = Init_links.get_link("lbonuses")
@@ -25,13 +27,14 @@ setup_models = Init_links.get_link("setup_models")
 remove_bon = Init_links.get_link("remove_bon")
 
 
-#vars
+# vars
 element_demo = "//tr[7]/td[2]/a"
 element_id = "login"
 _table = ".//*[@id='locked-bonuses-list']"
 buttonSearchID = "initial-filling"
 modelDBounce = "model_day_bonuses"
 Select_buttonName = "card_type_id"
+
 
 class Test_Loyality_settings(unittest.TestCase):
 
@@ -58,18 +61,21 @@ class Test_Loyality_settings(unittest.TestCase):
         driver = self.browser
         self.Authorize()
         driver.get(users)
-        link_demo = driver.find_element_by_xpath(element_demo).get_attribute('href')
+        link_demo = driver.find_element_by_xpath(
+            element_demo).get_attribute('href')
         driver.get(link_demo)
         username = driver.find_element_by_id('nnn').get_attribute('value')
-        self.assertEqual(username,'demo','values not equal')
+        self.assertEqual(username, 'demo', 'values not equal')
         driver.close()
     # @unittest.skip('skipped')
+
     def test_settings_positive(self):
         driver = self.browser
         self.Authorize()
         driver.get(settings)
-        login_text = driver.find_element_by_id(element_id).get_attribute('value')
-        self.assertEqual(login_text,'demo', 'login is not DEMO')
+        login_text = driver.find_element_by_id(
+            element_id).get_attribute('value')
+        self.assertEqual(login_text, 'demo', 'login is not DEMO')
         driver.close()
 
     def test_lbonuses_positive(self):
@@ -103,8 +109,6 @@ class Test_Loyality_settings(unittest.TestCase):
         ButtonSearch = driver.find_element_by_name(Select_buttonName)
         self.assertIsNotNone(ButtonSearch)
         driver.close()
-
-
 
     def tearDown(self):
         self.browser.close()

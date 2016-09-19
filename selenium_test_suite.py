@@ -19,3 +19,4 @@ suite.addTest(loader.loadTestsFromModule(test_settings))
 
 runner = unittest.TextTestRunner(verbosity=2)
 result = runner.run(suite)
+print 'suite complete...'

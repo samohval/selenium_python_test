@@ -6,26 +6,27 @@
 __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
-import unittest, config
+import unittest
+
+import config
 from selenium import webdriver
 
-
-#Init_block
+# Init_block
 Init_links = config.GetSettings()
 Init_connection = config.GetSettings().get_all_parameters()
 
-#authorization
+# authorization
 srv = Init_connection.get('server')
 user = Init_connection.get('user')
 pswd = Init_connection.get('password')
 
-#links
-members           = Init_links.get_link("members")
-members_group     = Init_links.get_link("members_group")
-
+# links
+members = Init_links.get_link("members")
+members_group = Init_links.get_link("members_group")
 
 
 class Test_loyality_members(unittest.TestCase):
+
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.maximize_window()
@@ -43,13 +44,13 @@ class Test_loyality_members(unittest.TestCase):
         self.browser.get(srv)
         self.LoginPass()
 
-
     # @unittest.skip('skipped')
     def test_detailed_info_member_positive(self):
         driver = self.browser
         self.Authorize()
         self.browser.get(members)
-        member_link = driver.find_element_by_xpath('//tr[1]/td[2]/a').get_attribute('href')
+        member_link = driver.find_element_by_xpath(
+            '//tr[1]/td[2]/a').get_attribute('href')
         driver.get(member_link)
         SearchElement = driver.find_element_by_id('cards')
         self.assertIsNotNone(SearchElement)
@@ -59,7 +60,8 @@ class Test_loyality_members(unittest.TestCase):
     def test_detailed_info_members_group_positive(self):
         self.Authorize()
         self.browser.get(members_group)
-        members_group_link = self.browser.find_element_by_xpath('//tr[1]/td[2]/a').get_attribute('href')
+        members_group_link = self.browser.find_element_by_xpath(
+            '//tr[1]/td[2]/a').get_attribute('href')
         self.browser.get(members_group_link)
         SearchElement = self.browser.find_element_by_id('name')
         self.assertIsNotNone(SearchElement)

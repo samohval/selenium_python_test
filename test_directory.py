@@ -5,26 +5,29 @@
 __version__ = "0.1"
 __author__ = "Samohval Maxim  <maxim.samohval@protonmail.com>"
 
-import unittest, config
+import unittest
+
+import config
 from selenium import webdriver
 
 Init_links = config.GetSettings()
 Init_connection = config.GetSettings().get_all_parameters()
 
-#authorization
+# authorization
 srv = Init_connection.get('server')
 user = Init_connection.get('user')
 pswd = Init_connection.get('password')
 
-#links
-products                = Init_links.get_link("products")
-categories              = Init_links.get_link("categories")
-corporate_directory     = Init_links.get_link("corporate_directory")
+# links
+products = Init_links.get_link("products")
+categories = Init_links.get_link("categories")
+corporate_directory = Init_links.get_link("corporate_directory")
 
-#vars
+# vars
 Tovar_table = ".//*[@id='lists']"
 category_table = ".//*[@id='is-target-4615']"
 Text_filter = ".//*[@id='filters']"
+
 
 class Test_Loyality_directory(unittest.TestCase):
 
@@ -60,18 +63,17 @@ class Test_Loyality_directory(unittest.TestCase):
         driver.get(categories)
         self.assertIsNotNone(driver.find_element_by_xpath(category_table))
         driver.close()
+
     def test_coprorate_directory(self):
         driver = self.browser
         self.Authorize()
         driver.get(corporate_directory)
         self.assertIsNotNone(driver.find_element_by_xpath(Text_filter))
-        driver.close() 
-
+        driver.close()
 
     def tearDown(self):
         self.browser.close()
         self.browser.quit()
-
 
 
 if __name__ == '__main__':

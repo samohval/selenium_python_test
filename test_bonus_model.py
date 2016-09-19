@@ -69,6 +69,7 @@ class Test_Loyality_bonus_models(unittest.TestCase):
         driver.find_element_by_name("add-products-id").click()
         driver.find_element_by_xpath("(//input[@name='add-products-id'])[2]").click()
         driver.find_element_by_css_selector("#products-load-buttons > button.btn.btn-primary").click()
+        wait.until(lambda driver: driver.find_element_by_id("save"))
         driver.find_element_by_id("save").click()
         wait.until(EC.invisibility_of_element_located((By.ID,'loading')))
         self.assertTrue("/edit/id/" in driver.current_url)
