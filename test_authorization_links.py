@@ -41,7 +41,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 # check link cards
-    # @unittest.skip('not supported')
+#     @unittest.skip('not supported')
     def test_link_Cards_positive(self):
         self.Authorize()
         wait = WebDriverWait(self.browser, 10)
@@ -52,7 +52,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 # check link members
-    # @unittest.skip('not supported')
+    @unittest.skip('not supported')
     def test_link_members_positive(self):
         self.Authorize()
         self.browser.get(self.members)
@@ -61,7 +61,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 # check link bonus_model
-    # @unittest.skip('not supported')
+#     @unittest.skip('not supported')
     def test_link_bonus_model_positive(self):
         self.Authorize()
         self.browser.get(self.bonus_model)
@@ -70,7 +70,7 @@ class Test_Loyalty_Authorization_Links(unittest.TestCase):
         self.browser.close()
 
 # check link trade_point
-    # @unittest.skip('not supported')
+#     @unittest.skip('not supported')
     def test_link_trade_point_positive(self):
         self.Authorize()
         self.browser.get(self.trade_point)

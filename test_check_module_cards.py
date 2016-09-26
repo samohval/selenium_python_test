@@ -108,5 +108,6 @@ class Test_Loyality_cards(unittest.TestCase):
         self.browser.close()
         self.browser.quit()
 
+
 if __name__ == '__main__':
     unittest.main(verbosity=5)
