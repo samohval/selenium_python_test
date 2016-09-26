@@ -37,9 +37,11 @@ class MyBrowser(object):
     def __init__(self):
         self.base_url = GetSettings().get_all_parameters().get("server")
         self.settings = GetSettings()
+        self.user = GetSettings().get_user()
 
     def main(self):
         print "server base_url: -> " + self.base_url
+        print "user: -> " + self.user
 
     def connect_auth_server(self,driver = None):
         driver.get(self.base_url)
@@ -54,3 +56,4 @@ class MyBrowser(object):
 
 if __name__ == '__main__':
     MyBrowser().main()
+
