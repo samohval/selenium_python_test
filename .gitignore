@@ -3,3 +3,5 @@
 /unittest_log
 *.png
 /testing_def.py
+*.xml
+*.iml
